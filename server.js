@@ -1,24 +1,23 @@
-import express from "express";
-import cors from "cors";
-import bodyParser from "body-parser";
-import { deepSeek } from "./deepseek.js";
+const express = require("express");
+const cors = require("cors");
+const bodyParser = require("body-parser");
+
+// pakai library scrape deepSeek mu nanti bisa dimasukin di sini
+// untuk contoh, sekarang dummy reply
 
 const app = express();
-app.use(cors()); // izinkan request dari frontend
+app.use(cors());
 app.use(bodyParser.json());
 
-app.get("/", (req, res) => res.send("🚀 Rev AI backend running"));
-
+// endpoint chat
 app.post("/chat", async (req, res) => {
-  try {
-    const msg = req.body.message || "";
-    const reply = await deepSeek(msg, false);
-    res.json({ reply });
-  } catch (err) {
-    console.error("deepSeek error:", err?.message || err);
-    res.status(500).json({ reply: "❌ Server error (deepSeek)." });
-  }
+  const { message } = req.body;
+
+  // sementara dummy reply
+  res.json({
+    reply: `Rev AI menerima pesanmu: "${message}"`
+  });
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server listening on ${PORT}`));
+app.listen(PORT, () => console.log(`✅ Backend running on port ${PORT}`));
