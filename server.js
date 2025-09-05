@@ -1,23 +1,20 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-
-// pakai library scrape deepSeek mu nanti bisa dimasukin di sini
-// untuk contoh, sekarang dummy reply
+const path = require("path");
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-// endpoint chat
+// Serve file HTML dari folder public
+app.use(express.static(path.join(__dirname, "public")));
+
+// Endpoint chat (dummy)
 app.post("/chat", async (req, res) => {
   const { message } = req.body;
-
-  // sementara dummy reply
-  res.json({
-    reply: `Rev AI menerima pesanmu: "${message}"`
-  });
+  res.json({ reply: `Rev AI menjawab: ${message}` });
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`✅ Backend running on port ${PORT}`));
+app.listen(PORT, () => console.log(`Server jalan di port ${PORT}`));
